@@ -1,17 +1,20 @@
-package project.models;
+package com.example.myapp.models;
 
 import javax.persistence.*;
 
 @Entity
-@Table(name = "USER") 
-@Inheritance(strategy=InheritanceType.SINGLE_TABLE)
 public class User {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 	private String username;
 	private String password;
+	private String firstName;
+	private String lastName;
+	private String role;
+	private String phone;
 	private String email;
+	private String dateOfBirth;
 
 	public int getId() {
 		return id;
@@ -37,6 +40,34 @@ public class User {
 		this.password = password;
 	}
 
+	public String getFirstName() {
+		return firstName;
+	}
+
+	public void setFirstName(String firstName) {
+		this.firstName = firstName;
+	}
+
+	public String getLastName() {
+		return lastName;
+	}
+
+	public void setLastName(String lastName) {
+		this.lastName = lastName;
+	}
+	
+	public String getRole() {
+		return role;
+	}
+
+	public void setRole(String role) {
+		this.role = role;
+	}
+	
+	public String getPhone() {
+		return phone;
+	}
+
 	public void setEmail(String email) {
 		this.email = email;
 	}
@@ -45,4 +76,15 @@ public class User {
 		return email;
 	}
 
+	public void setPhone(String phone) {
+		this.phone = phone;
+	}
+	
+	public String getDateOfBirth() {
+		return dateOfBirth;
+	}
+
+	public void setDateOfBirth(String dateOfBirth) {
+		this.dateOfBirth = dateOfBirth;
+	}
 }

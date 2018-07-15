@@ -1,43 +1,42 @@
-package project.services;
-
+package com.example.myapp.services;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import project.models.User;
-import project.repositories.UserRepository;
+import com.example.myapp.models.User;
+import com.example.myapp.repositories.UserRepository;
 
 import java.util.*;
 
 @RestController
 public class UserService {
 	@Autowired
-	UserRepository userRepository;
+	UserRepository repository;
 
 	@DeleteMapping("/api/user/{userId}")
 	public void deleteUser(@PathVariable("userId") int id) {
-		userRepository.deleteById(id);
+		repository.deleteById(id);
 	}
 
 	@PostMapping("/api/user")
 	public User createUser(@RequestBody User user) {
-		return userRepository.save(user);
+		return repository.save(user);
 	}
 
 	@GetMapping("/api/user")
 	public Iterable<User> findAllUsers(@RequestParam(name = "username", required = false) String username,
 			@RequestParam(name = "password", required = false) String password) {
 		if (username != null && password != null) {
-			return userRepository.findUserByCredentials(username, password);
+			return repository.findUserByCredentials(username, password);
 		} else if (username != null) {
-			return userRepository.findUserByUsername(username);
+			return repository.findUserByUsername(username);
 		}
-		return userRepository.findAll();
+		return repository.findAll();
 	}
 
 	@GetMapping("/api/user/{userId}")
 	public User findUserById(@PathVariable("userId") int userId) {
-		Optional<User> data = userRepository.findById(userId);
+		Optional<User> data = repository.findById(userId);
 		if (data.isPresent()) {
 			return data.get();
 		} else {
@@ -48,13 +47,18 @@ public class UserService {
 
 	@PutMapping("/api/user/{userId}")
 	public User updateUser(@PathVariable("userId") int userId, @RequestBody User newUser) {
-		Optional<User> data = userRepository.findById(userId);
+		Optional<User> data = repository.findById(userId);
 		if (data.isPresent()) {
 			User user = data.get();
+			user.setFirstName(newUser.getFirstName());
+			user.setLastName(newUser.getLastName());
 			user.setEmail(newUser.getEmail());
+			user.setPhone(newUser.getPhone());
+			user.setDateOfBirth(newUser.getDateOfBirth());
+			user.setRole(newUser.getRole());
 			user.setPassword(newUser.getPassword());
 
-			userRepository.save(user);
+			repository.save(user);
 			return user;
 		}
 		return null;
@@ -62,7 +66,7 @@ public class UserService {
 
 	@PostMapping("/api/login")
 	public User loginUser(@RequestBody User user) {
-		List<User> list = (List<User>) userRepository.findUserByCredentials(user.getUsername(), user.getPassword());
+		List<User> list = (List<User>) repository.findUserByCredentials(user.getUsername(), user.getPassword());
 		if(list==null || list.isEmpty()) {
 			return null;
 		}
@@ -71,7 +75,7 @@ public class UserService {
 
 	@PostMapping("/api/register")
 	public User registerUser(@RequestBody User user) {
-		List<User> list = (List<User>) userRepository.findUserByUsername(user.getUsername());
+		List<User> list = (List<User>) repository.findUserByUsername(user.getUsername());
 		if(list==null || list.isEmpty()) {
 			
 			return createUser(user);
