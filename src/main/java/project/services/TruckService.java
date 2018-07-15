@@ -35,7 +35,7 @@ public class TruckService {
 		Optional<User> data = userRepository.findById(userId);
 		if(data.isPresent()) {
 			User user = data.get();
-			return user.getTrucks();
+			//return user.getTrucks();
 		}
 		return null;		
 	}
