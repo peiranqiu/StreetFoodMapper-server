@@ -52,9 +52,7 @@ public class UserService {
 		if (data.isPresent()) {
 			User user = data.get();
 			user.setEmail(newUser.getEmail());
-			user.setRole(newUser.getRole());
 			user.setPassword(newUser.getPassword());
-			user.setTrucks(newUser.getTrucks());
 
 			userRepository.save(user);
 			return user;
