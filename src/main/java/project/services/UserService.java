@@ -1,10 +1,10 @@
-package com.example.myapp.services;
+package project.services;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import com.example.myapp.models.User;
-import com.example.myapp.repositories.UserRepository;
+import project.models.User;
+import project.repositories.UserRepository;
 
 import java.util.*;
 
@@ -24,13 +24,7 @@ public class UserService {
 	}
 
 	@GetMapping("/api/user")
-	public Iterable<User> findAllUsers(@RequestParam(name = "username", required = false) String username,
-			@RequestParam(name = "password", required = false) String password) {
-		if (username != null && password != null) {
-			return repository.findUserByCredentials(username, password);
-		} else if (username != null) {
-			return repository.findUserByUsername(username);
-		}
+	public Iterable<User> findAllUsers() {
 		return repository.findAll();
 	}
 
@@ -50,12 +44,7 @@ public class UserService {
 		Optional<User> data = repository.findById(userId);
 		if (data.isPresent()) {
 			User user = data.get();
-			user.setFirstName(newUser.getFirstName());
-			user.setLastName(newUser.getLastName());
-			user.setEmail(newUser.getEmail());
-			user.setPhone(newUser.getPhone());
-			user.setDateOfBirth(newUser.getDateOfBirth());
-			user.setRole(newUser.getRole());
+			user.setTrucks(newUser.getTrucks());
 			user.setPassword(newUser.getPassword());
 
 			repository.save(user);
@@ -64,30 +53,5 @@ public class UserService {
 		return null;
 	}
 
-	@PostMapping("/api/login")
-	public User loginUser(@RequestBody User user) {
-		List<User> list = (List<User>) repository.findUserByCredentials(user.getUsername(), user.getPassword());
-		if(list==null || list.isEmpty()) {
-			return null;
-		}
-		return list.get(0);
-	}
-
-	@PostMapping("/api/register")
-	public User registerUser(@RequestBody User user) {
-		List<User> list = (List<User>) repository.findUserByUsername(user.getUsername());
-		if(list==null || list.isEmpty()) {
-			
-			return createUser(user);
-		}
-		return null;
-	}
-	
-	
-
-	@PutMapping("/api/profile")
-	public User updateProfile(@PathVariable("userId") int userId, @RequestBody User user) {
-		return updateUser(userId, user);
-	}
 	
 }

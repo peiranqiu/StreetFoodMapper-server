@@ -7,23 +7,16 @@ import javax.persistence.*;
 import project.models.Truck;
 
 @Entity
-public class User {
+public class Owner {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
+	
 	private String email;
 	private String password;
-	@Column
-	@ElementCollection(targetClass=Truck.class)
+	
+	@OneToMany(mappedBy="owner", cascade=CascadeType.REMOVE, orphanRemoval=true)
 	private List<Truck> trucks;
-
-	public List<Truck> getTrucks() {
-		return trucks;
-	}
-
-	public void setTrucks(List<Truck> trucks) {
-		this.trucks = trucks;
-	}
 
 	public int getId() {
 		return id;
@@ -31,6 +24,14 @@ public class User {
 
 	public void setId(int id) {
 		this.id = id;
+	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
 	}
 
 	public String getPassword() {
@@ -41,11 +42,12 @@ public class User {
 		this.password = password;
 	}
 
-	public String getEmail() {
-		return email;
+	public List<Truck> getTrucks() {
+		return trucks;
 	}
 
-	public void setEmail(String email) {
-		this.email = email;
+	public void setTrucks(List<Truck> trucks) {
+		this.trucks = trucks;
 	}
+
 }
