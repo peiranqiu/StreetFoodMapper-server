@@ -2,6 +2,8 @@ package project.services;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -29,7 +31,7 @@ public class TruckService {
 	TruckRepository truckRepository;
 
 	@GetMapping("/api/user/{userId}/truck")
-	public List<Truck> findAllTrucksForUser(
+	public Set<Truck> findAllTrucksForUser(
 			@PathVariable("userId") int userId) {
 		Optional<User> data = userRepository.findById(userId);
 		if(data.isPresent()) {
@@ -103,6 +105,7 @@ public class TruckService {
 			truck.setHolidays(newTruck.getHolidays());
 			truck.setSchedules(newTruck.getSchedules());
 			truck.setOwner(newTruck.getOwner());
+			truck.setUsers(newTruck.getUsers());;
 
 			truckRepository.save(truck);
 			return truck;

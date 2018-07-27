@@ -1,6 +1,8 @@
 package project.models;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import javax.persistence.*;
 
@@ -23,20 +25,23 @@ public class Truck {
 	private String twitter;
 	private float rating;
 	
-	@Column
-	@ElementCollection(targetClass=Review.class)
+	@OneToMany(mappedBy="truck", cascade=CascadeType.REMOVE, orphanRemoval=true)
 	private List<Review> reviews;
 	
-	@Column
-	@ElementCollection(targetClass=String.class)
+	@ElementCollection
+	@CollectionTable(name = "images")
+	@Column(name = "imagesOfTruck", nullable = false)
 	private List<String> images;
 	
-	@Column
-	@ElementCollection(targetClass=String.class)
+	@ElementCollection
+	@CollectionTable(name = "holidays")
+	@Column(name = "holidaysOfTruck", nullable = false)
 	private List<String> holidays;
 	
-	@Column
-	@ElementCollection(targetClass=Category.class)
+	@ElementCollection(targetClass = Category.class)
+	@CollectionTable(name = "categories")
+	@Column(name = "categoriesOfTruck", nullable = false)
+	@Enumerated(EnumType.STRING)
 	private List<Category> categories;
 	
 	@OneToMany(mappedBy="truck", cascade=CascadeType.REMOVE, orphanRemoval=true)
@@ -46,6 +51,11 @@ public class Truck {
 	@JsonIgnore
 	@OnDelete(action = OnDeleteAction.CASCADE)
 	private Owner owner;
+	
+	@ManyToMany(cascade = { CascadeType.PERSIST, CascadeType.MERGE})
+	@JoinTable(name = "user_truck", joinColumns = @JoinColumn(name = "truck_id"), 
+	inverseJoinColumns = @JoinColumn(name = "user_id"))
+	private Set<User> users = new HashSet<>();
 	
 	public int getId() {
 		return id;
@@ -156,5 +166,13 @@ public class Truck {
 
 	public void setHolidays(List<String> holidays) {
 		this.holidays = holidays;
+	}
+
+	public Set<User> getUsers() {
+		return users;
+	}
+
+	public void setUsers(Set<User> users) {
+		this.users = users;
 	}
 }

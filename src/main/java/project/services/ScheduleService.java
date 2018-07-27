@@ -1,15 +1,8 @@
 package project.services;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Optional;
 
-import javax.persistence.CascadeType;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
-
-import org.hibernate.annotations.OnDelete;
-import org.hibernate.annotations.OnDeleteAction;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -20,18 +13,10 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
-import project.models.Category;
-import project.models.Owner;
-import project.models.Review;
 import project.models.Schedule;
 import project.models.Truck;
-import project.models.User;
-import project.repositories.OwnerRepository;
 import project.repositories.ScheduleRepository;
 import project.repositories.TruckRepository;
-import project.repositories.UserRepository;
 
 @RestController
 @CrossOrigin(origins = "*", maxAge = 3600)
@@ -95,12 +80,20 @@ public class ScheduleService {
 			schedule.setOpen(newSchedule.isOpen());
 			schedule.setLatitude(newSchedule.getLatitude());
 			schedule.setLongitude(newSchedule.getLongitude());
-			schedule.setTime(newSchedule.getTime());
+			schedule.setOpenTimes(newSchedule.getOpenTimes());
 			schedule.setTruck(newSchedule.getTruck());
 
 			scheduleRepository.save(schedule);
 			return schedule;
 		}
 		return null;
+	}
+	
+	@PostMapping("/api/schedule/save")
+	public void saveAllSchedules(@RequestBody List<Schedule> schedules) {
+		scheduleRepository.deleteAll();
+		for(Schedule schedule: schedules) {
+			scheduleRepository.save(schedule);
+		}
 	}
 }

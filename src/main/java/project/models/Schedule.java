@@ -18,7 +18,9 @@ public class Schedule {
 	private boolean isOpen;
 	private String latitude;
 	private String longitude;
-	private HashMap<Integer, List<Integer>> time;
+	
+	@OneToMany(mappedBy="schedule", cascade=CascadeType.REMOVE, orphanRemoval=true)
+	private List<OpenTime> openTimes;
 
 	@ManyToOne
 	@JsonIgnore
@@ -49,14 +51,6 @@ public class Schedule {
 		this.longitude = longitude;
 	}
 
-	public HashMap<Integer, List<Integer>> getTime() {
-		return time;
-	}
-
-	public void setTime(HashMap<Integer, List<Integer>> time) {
-		this.time = time;
-	}
-
 	public Truck getTruck() {
 		return truck;
 	}
@@ -71,6 +65,14 @@ public class Schedule {
 
 	public void setOpen(boolean isOpen) {
 		this.isOpen = isOpen;
+	}
+
+	public List<OpenTime> getOpenTimes() {
+		return openTimes;
+	}
+
+	public void setOpenTimes(List<OpenTime> openTimes) {
+		this.openTimes = openTimes;
 	}
 
 }

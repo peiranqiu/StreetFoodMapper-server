@@ -1,6 +1,7 @@
 package project.models;
 
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 import javax.persistence.*;
 
@@ -13,18 +14,11 @@ public class User {
 	private int id;
 	private String email;
 	private String password;
-	@Column
-	@ElementCollection(targetClass=Truck.class)
-	private List<Truck> trucks;
+	
+	@ManyToMany(mappedBy="users")
+	private Set<Truck> trucks = new HashSet<>();
 
-	public List<Truck> getTrucks() {
-		return trucks;
-	}
-
-	public void setTrucks(List<Truck> trucks) {
-		this.trucks = trucks;
-	}
-
+	
 	public int getId() {
 		return id;
 	}
@@ -47,5 +41,13 @@ public class User {
 
 	public void setEmail(String email) {
 		this.email = email;
+	}
+
+	public Set<Truck> getTrucks() {
+		return trucks;
+	}
+
+	public void setTrucks(Set<Truck> trucks) {
+		this.trucks = trucks;
 	}
 }
