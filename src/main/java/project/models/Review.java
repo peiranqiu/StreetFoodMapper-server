@@ -15,7 +15,7 @@ public class Review {
 	
 	private String userName;
 	private String text;
-	private float rating;
+	private int rating;
 	private String timeCreated;
 	
 	@ManyToOne
@@ -32,11 +32,11 @@ public class Review {
 		this.text = text;
 	}
 
-	public float getRating() {
+	public int getRating() {
 		return rating;
 	}
 
-	public void setRating(float rating) {
+	public void setRating(int rating) {
 		this.rating = rating;
 	}
 

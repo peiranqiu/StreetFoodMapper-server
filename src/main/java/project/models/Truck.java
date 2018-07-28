@@ -16,14 +16,15 @@ public class Truck {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
-	private int yelpId;
+	private String yelpId;
 	
 	private String name;
 	private String url;
+	private String website;
 	private String menu;
 	private String phone;
 	private String twitter;
-	private float rating;
+	private int rating;
 	
 	@OneToMany(mappedBy="truck", cascade=CascadeType.REMOVE, orphanRemoval=true)
 	private List<Review> reviews;
@@ -56,7 +57,7 @@ public class Truck {
 	@JoinTable(name = "user_truck", joinColumns = @JoinColumn(name = "truck_id"), 
 	inverseJoinColumns = @JoinColumn(name = "user_id"))
 	private Set<User> users = new HashSet<>();
-	
+
 	public int getId() {
 		return id;
 	}
@@ -65,11 +66,11 @@ public class Truck {
 		this.id = id;
 	}
 
-	public int getYelpId() {
+	public String getYelpId() {
 		return yelpId;
 	}
 
-	public void setYelpId(int yelpId) {
+	public void setYelpId(String yelpId) {
 		this.yelpId = yelpId;
 	}
 
@@ -87,6 +88,14 @@ public class Truck {
 
 	public void setUrl(String url) {
 		this.url = url;
+	}
+
+	public String getWebsite() {
+		return website;
+	}
+
+	public void setWebsite(String website) {
+		this.website = website;
 	}
 
 	public String getMenu() {
@@ -113,11 +122,11 @@ public class Truck {
 		this.twitter = twitter;
 	}
 
-	public float getRating() {
+	public int getRating() {
 		return rating;
 	}
 
-	public void setRating(float rating) {
+	public void setRating(int rating) {
 		this.rating = rating;
 	}
 
@@ -135,6 +144,14 @@ public class Truck {
 
 	public void setImages(List<String> images) {
 		this.images = images;
+	}
+
+	public List<String> getHolidays() {
+		return holidays;
+	}
+
+	public void setHolidays(List<String> holidays) {
+		this.holidays = holidays;
 	}
 
 	public List<Category> getCategories() {
@@ -160,13 +177,6 @@ public class Truck {
 	public void setOwner(Owner owner) {
 		this.owner = owner;
 	}
-	public List<String> getHolidays() {
-		return holidays;
-	}
-
-	public void setHolidays(List<String> holidays) {
-		this.holidays = holidays;
-	}
 
 	public Set<User> getUsers() {
 		return users;
@@ -175,4 +185,5 @@ public class Truck {
 	public void setUsers(Set<User> users) {
 		this.users = users;
 	}
+	
 }

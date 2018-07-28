@@ -105,7 +105,8 @@ public class TruckService {
 			truck.setHolidays(newTruck.getHolidays());
 			truck.setSchedules(newTruck.getSchedules());
 			truck.setOwner(newTruck.getOwner());
-			truck.setUsers(newTruck.getUsers());;
+			truck.setUsers(newTruck.getUsers());
+			truck.setWebsite(newTruck.getWebsite());
 
 			truckRepository.save(truck);
 			return truck;
