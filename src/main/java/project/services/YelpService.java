@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
+import project.models.Photo;
 import project.models.Review;
 import project.models.Truck;
 
@@ -25,7 +26,7 @@ import java.util.List;
 import javax.servlet.http.HttpServletResponse;
 
 @RestController
-@CrossOrigin(origins = "http://localhost:3000", allowCredentials = "true")
+@CrossOrigin(origins =  "*", maxAge = 3600, allowCredentials = "true")
 // @CrossOrigin(origins = "https://foodtruckmapper.herokuapp.com",
 // allowCredentials = "true")
 public class YelpService {
@@ -106,10 +107,17 @@ public class YelpService {
 
 		truck.setYelpId(object.getString("id"));
 		truck.setName(object.getString("name"));
+		truck.setUrl(object.getString("url"));
 		truck.setPhone(object.getString("phone"));
 		truck.setRating(object.getInt("rating"));
-		JSONArray images = object.getJSONArray("photos");
-		truck.setImages(Arrays.asList(images.get(0).toString(), images.get(1).toString(), images.get(2).toString()));
+		JSONArray myResponse = object.getJSONArray("photos");
+		List<Photo> photos = new ArrayList<Photo>();
+		for (int i = 0; i < 3; i++) {
+			Photo photo = new Photo();
+			photo.setHref(myResponse.get(i).toString());
+			photos.add(photo);
+		}
+		truck.setPhotos(photos);
 
 		return truck;
 	}

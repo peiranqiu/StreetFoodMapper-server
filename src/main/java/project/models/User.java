@@ -15,10 +15,6 @@ public class User {
 	private String email;
 	private String password;
 	
-	@ManyToMany(mappedBy="users")
-	private Set<Truck> trucks = new HashSet<>();
-
-	
 	public int getId() {
 		return id;
 	}
@@ -41,13 +37,5 @@ public class User {
 
 	public void setEmail(String email) {
 		this.email = email;
-	}
-
-	public Set<Truck> getTrucks() {
-		return trucks;
-	}
-
-	public void setTrucks(Set<Truck> trucks) {
-		this.trucks = trucks;
 	}
 }

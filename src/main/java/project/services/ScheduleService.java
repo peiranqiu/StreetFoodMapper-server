@@ -3,6 +3,8 @@ package project.services;
 import java.util.List;
 import java.util.Optional;
 
+import javax.servlet.http.HttpServletResponse;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -19,7 +21,7 @@ import project.repositories.ScheduleRepository;
 import project.repositories.TruckRepository;
 
 @RestController
-@CrossOrigin(origins = "*", maxAge = 3600)
+@CrossOrigin(origins =  "*", maxAge = 3600, allowCredentials = "true")
 public class ScheduleService {
 	@Autowired
 	ScheduleRepository scheduleRepository;
@@ -28,23 +30,25 @@ public class ScheduleService {
 
 	@GetMapping("/api/truck/{truckId}/schedule")
 	public List<Schedule> findAllSchedulesForTruck(
-			@PathVariable("truckId") int truckId) {
+			@PathVariable("truckId") int truckId, HttpServletResponse response) {
 		Optional<Truck> data = truckRepository.findById(truckId);
 		if(data.isPresent()) {
 			Truck truck = data.get();
 			return truck.getSchedules();
 		}
+		response.setStatus(HttpServletResponse.SC_NOT_FOUND);
 		return null;		
 	}
 	
 	@PostMapping("/api/truck/{truckId}/schedule")
-	public Schedule createSchedule(@PathVariable("truckId") int truckId, @RequestBody Schedule newSchedule) {
+	public Schedule createSchedule(@PathVariable("truckId") int truckId, @RequestBody Schedule newSchedule, HttpServletResponse response) {
 		Optional<Truck> data = truckRepository.findById(truckId);
 		if (data.isPresent()) {
 			Truck truck = data.get();
 			newSchedule.setTruck(truck);
 			return scheduleRepository.save(newSchedule);
 		}
+		response.setStatus(HttpServletResponse.SC_NOT_FOUND);
 		return null;
 	}
 	
@@ -62,17 +66,17 @@ public class ScheduleService {
 	}
 	
 	@GetMapping("/api/schedule/{scheduleId}")
-	public Schedule findScheduleById(@PathVariable("scheduleId") int scheduleId) {
+	public Schedule findScheduleById(@PathVariable("scheduleId") int scheduleId, HttpServletResponse response) {
 		Optional<Schedule> data = scheduleRepository.findById(scheduleId);
 		if (data.isPresent()) {
 			return data.get();
-		} else {
-			return null;
-		}
+		} 
+		response.setStatus(HttpServletResponse.SC_NOT_FOUND);
+		return null;
 	}
 	
-	@PutMapping("/api/schedule/{scheduleId}")
-	public Schedule updateSchedule(@PathVariable("scheduleId") int scheduleId, @RequestBody Schedule newSchedule) {
+	@PutMapping("/api/truck/{truckId}/schedule/{scheduleId}")
+	public Schedule updateSchedule(@PathVariable("scheduleId") int scheduleId, @RequestBody Schedule newSchedule, HttpServletResponse response) {
 		Optional<Schedule> data = scheduleRepository.findById(scheduleId);
 		if (data.isPresent()) {
 			Schedule schedule = data.get();
@@ -81,19 +85,14 @@ public class ScheduleService {
 			schedule.setLatitude(newSchedule.getLatitude());
 			schedule.setLongitude(newSchedule.getLongitude());
 			schedule.setOpenTimes(newSchedule.getOpenTimes());
+			schedule.setAddress(newSchedule.getAddress());
 			schedule.setTruck(newSchedule.getTruck());
 
 			scheduleRepository.save(schedule);
 			return schedule;
 		}
+		response.setStatus(HttpServletResponse.SC_NOT_FOUND);
 		return null;
 	}
 	
-	@PostMapping("/api/schedule/save")
-	public void saveAllSchedules(@RequestBody List<Schedule> schedules) {
-		scheduleRepository.deleteAll();
-		for(Schedule schedule: schedules) {
-			scheduleRepository.save(schedule);
-		}
-	}
 }

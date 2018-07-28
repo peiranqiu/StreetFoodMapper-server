@@ -26,24 +26,26 @@ public class Truck {
 	private String twitter;
 	private int rating;
 	
+	@Enumerated(EnumType.STRING)
+    @Column(name = "category1")
+	private Category category1;
+	
+	@Enumerated(EnumType.STRING)
+    @Column(name = "category2")
+	private Category category2;
+	
+	@Enumerated(EnumType.STRING)
+    @Column(name = "category3")
+	private Category category3;
+	
 	@OneToMany(mappedBy="truck", cascade=CascadeType.REMOVE, orphanRemoval=true)
 	private List<Review> reviews;
 	
-	@ElementCollection
-	@CollectionTable(name = "images")
-	@Column(name = "imagesOfTruck", nullable = false)
-	private List<String> images;
+	@OneToMany(mappedBy="truck", cascade=CascadeType.REMOVE, orphanRemoval=true)
+	private List<Photo> photos;
 	
-	@ElementCollection
-	@CollectionTable(name = "holidays")
-	@Column(name = "holidaysOfTruck", nullable = false)
-	private List<String> holidays;
-	
-	@ElementCollection(targetClass = Category.class)
-	@CollectionTable(name = "categories")
-	@Column(name = "categoriesOfTruck", nullable = false)
-	@Enumerated(EnumType.STRING)
-	private List<Category> categories;
+	@OneToMany(mappedBy="truck", cascade=CascadeType.REMOVE, orphanRemoval=true)
+	private List<Holiday> holidays;
 	
 	@OneToMany(mappedBy="truck", cascade=CascadeType.REMOVE, orphanRemoval=true)
 	private List<Schedule> schedules;
@@ -52,11 +54,6 @@ public class Truck {
 	@JsonIgnore
 	@OnDelete(action = OnDeleteAction.CASCADE)
 	private Owner owner;
-	
-	@ManyToMany(cascade = { CascadeType.PERSIST, CascadeType.MERGE})
-	@JoinTable(name = "user_truck", joinColumns = @JoinColumn(name = "truck_id"), 
-	inverseJoinColumns = @JoinColumn(name = "user_id"))
-	private Set<User> users = new HashSet<>();
 
 	public int getId() {
 		return id;
@@ -138,30 +135,6 @@ public class Truck {
 		this.reviews = reviews;
 	}
 
-	public List<String> getImages() {
-		return images;
-	}
-
-	public void setImages(List<String> images) {
-		this.images = images;
-	}
-
-	public List<String> getHolidays() {
-		return holidays;
-	}
-
-	public void setHolidays(List<String> holidays) {
-		this.holidays = holidays;
-	}
-
-	public List<Category> getCategories() {
-		return categories;
-	}
-
-	public void setCategories(List<Category> categories) {
-		this.categories = categories;
-	}
-
 	public List<Schedule> getSchedules() {
 		return schedules;
 	}
@@ -178,12 +151,44 @@ public class Truck {
 		this.owner = owner;
 	}
 
-	public Set<User> getUsers() {
-		return users;
+	public List<Photo> getPhotos() {
+		return photos;
 	}
 
-	public void setUsers(Set<User> users) {
-		this.users = users;
+	public void setPhotos(List<Photo> photos) {
+		this.photos = photos;
+	}
+
+	public List<Holiday> getHolidays() {
+		return holidays;
+	}
+
+	public void setHolidays(List<Holiday> holidays) {
+		this.holidays = holidays;
+	}
+
+	public Category getCategory1() {
+		return category1;
+	}
+
+	public void setCategory1(Category category1) {
+		this.category1 = category1;
+	}
+
+	public Category getCategory2() {
+		return category2;
+	}
+
+	public void setCategory2(Category category2) {
+		this.category2 = category2;
+	}
+
+	public Category getCategory3() {
+		return category3;
+	}
+
+	public void setCategory3(Category category3) {
+		this.category3 = category3;
 	}
 	
 }

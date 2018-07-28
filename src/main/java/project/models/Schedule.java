@@ -18,6 +18,7 @@ public class Schedule {
 	private boolean isOpen;
 	private String latitude;
 	private String longitude;
+	private String address;
 	
 	@OneToMany(mappedBy="schedule", cascade=CascadeType.REMOVE, orphanRemoval=true)
 	private List<OpenTime> openTimes;
@@ -73,6 +74,14 @@ public class Schedule {
 
 	public void setOpenTimes(List<OpenTime> openTimes) {
 		this.openTimes = openTimes;
+	}
+
+	public String getAddress() {
+		return address;
+	}
+
+	public void setAddress(String address) {
+		this.address = address;
 	}
 
 }
