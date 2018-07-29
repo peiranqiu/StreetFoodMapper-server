@@ -38,7 +38,7 @@ public class YelpService {
 
 	@ResponseBody
 	@GetMapping("/api/yelp/truck/phone/{phone}")
-	String findYelpIdByMatching(@PathVariable("phone") String phone, HttpServletResponse responsebody)
+	Truck findTruckByMatching(@PathVariable("phone") String phone, HttpServletResponse responsebody)
 			throws IOException, JSONException {
 		String url = "https://api.yelp.com/v3/businesses/search/phone";
 		url = url + "?phone=" + phone;
@@ -55,7 +55,9 @@ public class YelpService {
 			responsebody.setStatus(HttpServletResponse.SC_NOT_FOUND);
 		}
 
-		return myResponse.getJSONObject(0).getString("id");
+		String yelpId = myResponse.getJSONObject(0).getString("id");
+		Truck truck = findTruckByYelpId(yelpId);
+		return truck;
 	}
 
 	@GetMapping("/api/yelp/truck/{yelpId}")
@@ -67,7 +69,10 @@ public class YelpService {
 
 		JSONObject jsonObject = new JSONObject(response.body().string().trim());
 
-		return jsonToTruck(jsonObject);
+		Truck truck = jsonToTruck(jsonObject);
+		List<Review> reviews= findTruckReviewsByYelpId(yelpId);
+		truck.setReviews(reviews);
+		return truck;
 	}
 
 	@GetMapping("/api/yelp/truck/{yelpId}/review")

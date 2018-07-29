@@ -28,8 +28,8 @@ public class OpenTimeService {
 	@Autowired
 	OpenTimeRepository openTimeRepository;
 
-	@GetMapping("/api/truck/{truckId}/schedule/{scheduleId}/opentime")
-	public List<OpenTime> findAllOpenTimesForSchedule(
+	@GetMapping("/api/truck/{truckId}/schedule/{scheduleId}/openTime")
+	public List<OpenTime> findOpenTimesForSchedule(
 			@PathVariable("scheduleId") int scheduleId, HttpServletResponse response) {
 		Optional<Schedule> data = scheduleRepository.findById(scheduleId);
 		if(data.isPresent()) {
@@ -40,7 +40,13 @@ public class OpenTimeService {
 		return null;		
 	}
 	
-	@PostMapping("/api/truck/{truckId}/schedule/{scheduleId}/opentime")
+	@GetMapping("/api/openTime")
+	public List<OpenTime> findAllOpenTimes()
+	{
+		return (List<OpenTime>) openTimeRepository.findAll();
+	}
+	
+	@PostMapping("/api/truck/{truckId}/schedule/{scheduleId}/openTime")
 	public OpenTime createOpenTime(@PathVariable("scheduleId") int scheduleId, 
 			@RequestBody OpenTime newOpenTime, HttpServletResponse response) {
 		Optional<Schedule> data = scheduleRepository.findById(scheduleId);

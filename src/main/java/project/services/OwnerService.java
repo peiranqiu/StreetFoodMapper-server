@@ -57,7 +57,7 @@ public class OwnerService {
 	    return null;
 	  }
 	
-	  @PutMapping("/api/profile/owner/{ownerId}/profile")
+	  @PutMapping("/api/profile/owner/{ownerId}")
 	  public Owner updateOwnerProfile(@PathVariable("ownerId") int ownerId,
 	                                               @RequestBody Owner owner) {
 	    Optional<Owner> data = ownerRepository.findById(ownerId);

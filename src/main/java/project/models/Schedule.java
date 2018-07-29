@@ -15,7 +15,7 @@ public class Schedule {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 	
-	private boolean isOpen;
+	private boolean isOpen = false;
 	private String latitude;
 	private String longitude;
 	private String address;

@@ -80,7 +80,7 @@ public class UserService {
 	    return null;
 	  }
 	
-	  @PutMapping("/api/profile/user/{userId}/profile")
+	  @PutMapping("/api/profile/user/{userId}")
 	  public User updateUserProfile(@PathVariable("userId") int userId, @RequestBody User user) {
 	    Optional<User> data = userRepository.findById(userId);
 	    if (data.isPresent()) {

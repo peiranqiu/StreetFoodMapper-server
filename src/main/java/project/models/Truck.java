@@ -1,8 +1,6 @@
 package project.models;
 
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 import javax.persistence.*;
 
@@ -17,7 +15,7 @@ public class Truck {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 	private String yelpId;
-	
+	private Boolean isOpen;
 	private String name;
 	private String url;
 	private String website;
@@ -189,6 +187,14 @@ public class Truck {
 
 	public void setCategory3(Category category3) {
 		this.category3 = category3;
+	}
+
+	public Boolean getIsOpen() {
+		return isOpen;
+	}
+
+	public void setIsOpen(Boolean isOpen) {
+		this.isOpen = isOpen;
 	}
 	
 }

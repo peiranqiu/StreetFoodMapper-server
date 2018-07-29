@@ -114,6 +114,7 @@ public class TruckService {
 			truck.setCategory1(newTruck.getCategory1());
 			truck.setCategory2(newTruck.getCategory2());
 			truck.setCategory3(newTruck.getCategory3());
+			truck.setIsOpen(newTruck.getIsOpen());
 
 			truckRepository.save(truck);
 			return truck;
