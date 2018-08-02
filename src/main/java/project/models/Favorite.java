@@ -14,7 +14,7 @@ public class Favorite {
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private int id;
   @OneToOne
-  private Truck truck;
+  private Schedule schedule;
   @OneToOne
   private User user;
 
@@ -26,19 +26,19 @@ public class Favorite {
     this.id = id;
   }
 
-public Truck getTruck() {
-	return truck;
-}
-
-public void setTruck(Truck truck) {
-	this.truck = truck;
-}
-
 public User getUser() {
 	return user;
 }
 
 public void setUser(User user) {
 	this.user = user;
+}
+
+public Schedule getSchedule() {
+	return schedule;
+}
+
+public void setSchedule(Schedule schedule) {
+	this.schedule = schedule;
 }
 }

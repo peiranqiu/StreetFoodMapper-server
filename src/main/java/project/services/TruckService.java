@@ -2,7 +2,6 @@ package project.services;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.Set;
 
 import javax.servlet.http.HttpServletResponse;
 
@@ -16,14 +15,10 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import project.models.Favorite;
 import project.models.Owner;
 import project.models.Truck;
-import project.models.User;
-import project.repositories.FavoriteRepository;
 import project.repositories.OwnerRepository;
 import project.repositories.TruckRepository;
-import project.repositories.UserRepository;
 
 @RestController
 @CrossOrigin(origins = "*", maxAge = 3600, allowCredentials = "true")
@@ -32,8 +27,6 @@ public class TruckService {
 	OwnerRepository ownerRepository;
 	@Autowired
 	TruckRepository truckRepository;
-	@Autowired
-	FavoriteRepository favoriteRepository;
 
 	@GetMapping("/api/owner/{ownerId}/truck")
 	public List<Truck> findAllTrucksForOwner(@PathVariable("ownerId") int ownerId, HttpServletResponse response) {
@@ -61,17 +54,6 @@ public class TruckService {
 
 	@DeleteMapping("/api/truck/{truckId}")
 	public void deleteTruck(@PathVariable("truckId") int truckId) {
-		Optional<Truck> truckOptional = truckRepository.findById(truckId);
-		if (truckOptional.isPresent()) {
-			Truck truck = truckOptional.get();
-			// remove related favorites
-			List<Favorite> favorites = (List<Favorite>) favoriteRepository.findAll();
-			for (Favorite fav : favorites) {
-				if (fav.getTruck().getId() == truckId) {
-					favoriteRepository.deleteById(fav.getId());
-				}
-			}
-		}
 		truckRepository.deleteById(truckId);
 	}
 

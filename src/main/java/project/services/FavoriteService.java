@@ -9,10 +9,10 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import project.models.Favorite;
-import project.models.Truck;
+import project.models.Schedule;
 import project.models.User;
 import project.repositories.FavoriteRepository;
-import project.repositories.TruckRepository;
+import project.repositories.ScheduleRepository;
 import project.repositories.UserRepository;
 
 import java.util.ArrayList;
@@ -30,15 +30,15 @@ public class FavoriteService {
   @Autowired
   FavoriteRepository favoriteRepository;
   @Autowired
-  TruckRepository truckRepository;
+  ScheduleRepository scheduleRepository;
   @Autowired
   UserRepository userRepository;
 
-  @PostMapping("/api/favorite/{truckId}")
-  public void userLikesTruck(@PathVariable("truckId") int truckId,
+  @PostMapping("/api/favorite/{scheduleId}")
+  public void userLikesSchedule(@PathVariable("scheduleId") int scheduleId,
                                       HttpServletRequest request, HttpServletResponse response) {
-    // find truck by id
-    Optional<Truck> truckOptional = truckRepository.findById(truckId);
+    // find schedule by id
+    Optional<Schedule> scheduleOptional = scheduleRepository.findById(scheduleId);
 
     // retrieve user by session
     HttpSession session = request.getSession(false);
@@ -52,20 +52,20 @@ public class FavoriteService {
       userOptional = userRepository.findById(currentUser.getId());
     }
 
-    if (truckOptional.isPresent() && userOptional.isPresent()) {
-      Truck truck = truckOptional.get();
+    if (scheduleOptional.isPresent() && userOptional.isPresent()) {
+      Schedule schedule = scheduleOptional.get();
       User user = userOptional.get();
 
       List<Favorite> favHistory = (List<Favorite>) favoriteRepository.findAll();
       for (Favorite favorite : favHistory) {
         if (favorite.getUser().getId() == user.getId()
-                && favorite.getTruck().getId() == truck.getId()) {
+                && favorite.getSchedule().getId() == schedule.getId()) {
           return;
         }
       }
 
       Favorite fav = new Favorite();
-      fav.setTruck(truck);
+      fav.setSchedule(schedule);
       fav.setUser(user);
       favoriteRepository.save(fav);
       return;
@@ -74,11 +74,11 @@ public class FavoriteService {
   }
 
 
-  @DeleteMapping("/api/favorite/{truckId}")
-  public void userUnlikesTruck(@PathVariable("truckId") int truckId,
+  @DeleteMapping("/api/favorite/{scheduleId}")
+  public void userUnlikesSchedule(@PathVariable("scheduleId") int scheduleId,
                                         HttpServletRequest request, HttpServletResponse response) {
-    // find truck by id
-    Optional<Truck> truckOptional = truckRepository.findById(truckId);
+    // find schedule by id
+    Optional<Schedule> scheduleOptional = scheduleRepository.findById(scheduleId);
 
     // retrieve user by session
     HttpSession session = request.getSession(false);
@@ -92,14 +92,14 @@ public class FavoriteService {
       userOptional = userRepository.findById(currentUser.getId());
     }
 
-    if (truckOptional.isPresent() && userOptional.isPresent()) {
-      Truck truck = truckOptional.get();
+    if (scheduleOptional.isPresent() && userOptional.isPresent()) {
+      Schedule schedule = scheduleOptional.get();
       User user = userOptional.get();
 
       List<Favorite> favHistory = (List<Favorite>) favoriteRepository.findAll();
       for (Favorite favorite : favHistory) {
         if (favorite.getUser().getId() == user.getId()
-                && favorite.getTruck().getId() == truck.getId()) {
+                && favorite.getSchedule().getId() == schedule.getId()) {
           favoriteRepository.deleteById(favorite.getId());
         }
       }
@@ -109,11 +109,11 @@ public class FavoriteService {
   }
 
 
-  @GetMapping("/api/favorite/{truckId}")
-  public Favorite findFavorite(@PathVariable("truckId") int truckId,
+  @GetMapping("/api/favorite/{scheduleId}")
+  public Favorite findFavorite(@PathVariable("scheduleId") int scheduleId,
                                HttpServletRequest request, HttpServletResponse response) {
-    // find truck by id
-    Optional<Truck> truckOptional = truckRepository.findById(truckId);
+    // find schedule by id
+    Optional<Schedule> scheduleOptional = scheduleRepository.findById(scheduleId);
 
     // retrieve user by session
     HttpSession session = request.getSession(false);
@@ -127,15 +127,15 @@ public class FavoriteService {
       userOptional = userRepository.findById(currentUser.getId());
     }
 
-    if (truckOptional.isPresent() && userOptional.isPresent()) {
-      Truck truck = truckOptional.get();
+    if (scheduleOptional.isPresent() && userOptional.isPresent()) {
+      Schedule schedule = scheduleOptional.get();
       User user = userOptional.get();
 
       List<Favorite> favHistory = (List<Favorite>) favoriteRepository.findAll();
 
       for (Favorite favorite : favHistory) {
         if (favorite.getUser().getId() == user.getId()
-                && favorite.getTruck().getId() == truck.getId()) {
+                && favorite.getSchedule().getId() == schedule.getId()) {
           return favorite;
         }
       }
@@ -146,25 +146,25 @@ public class FavoriteService {
 
 
   @GetMapping("/api/favorite/user/{userId}")
-  public List<Truck> findFavoritesForUser(@PathVariable("userId") int userId) {
-    List<Truck> trucks = new ArrayList<Truck>();
+  public List<Schedule> findFavoritesForUser(@PathVariable("userId") int userId) {
+    List<Schedule> schedules = new ArrayList<Schedule>();
     List<Favorite> favorites = (List<Favorite>) favoriteRepository.findAll();
 
     for (Favorite fav : favorites) {
       if (fav.getUser().getId() == userId) {
-        trucks.add(fav.getTruck());
+        schedules.add(fav.getSchedule());
       }
     }
-    return trucks;
+    return schedules;
   }
 
-  @GetMapping("/api/favorite/truck/{truckId}")
-  public List<User> findFollowersForTruck(@PathVariable("truckId") int truckId) {
+  @GetMapping("/api/favorite/schedule/{scheduleId}")
+  public List<User> findFollowersForSchedule(@PathVariable("scheduleId") int scheduleId) {
     List<User> followers = new ArrayList<User>();
     List<Favorite> favorites = (List<Favorite>) favoriteRepository.findAll();
 
     for (Favorite fav : favorites) {
-      if (fav.getTruck().getId() == truckId) {
+      if (fav.getSchedule().getId() == scheduleId) {
         followers.add(fav.getUser());
       }
     }

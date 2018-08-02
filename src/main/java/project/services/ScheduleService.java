@@ -15,8 +15,10 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import project.models.Favorite;
 import project.models.Schedule;
 import project.models.Truck;
+import project.repositories.FavoriteRepository;
 import project.repositories.ScheduleRepository;
 import project.repositories.TruckRepository;
 
@@ -27,6 +29,8 @@ public class ScheduleService {
 	ScheduleRepository scheduleRepository;
 	@Autowired
 	TruckRepository truckRepository;
+	@Autowired
+	FavoriteRepository favoriteRepository;
 
 	@GetMapping("/api/truck/{truckId}/schedule")
 	public List<Schedule> findAllSchedulesForTruck(
@@ -56,6 +60,17 @@ public class ScheduleService {
 	@DeleteMapping("/api/schedue/{scheduleId}")
 	public void deleteSchedule(@PathVariable("scheduleId") int scheduleId)
 	{
+		Optional<Schedule> scheduleOptional = scheduleRepository.findById(scheduleId);
+		if (scheduleOptional.isPresent()) {
+			Schedule schedule = scheduleOptional.get();
+			// remove related favorites
+			List<Favorite> favorites = (List<Favorite>) favoriteRepository.findAll();
+			for (Favorite fav : favorites) {
+				if (fav.getSchedule().getId() == scheduleId) {
+					scheduleRepository.deleteById(fav.getId());
+				}
+			}
+		}
 		scheduleRepository.deleteById(scheduleId);
 	}
 	
