@@ -73,8 +73,7 @@ public class Schedule {
 	}
 
 	public void setOpenTimes(List<OpenTime> openTimes) {
-		this.openTimes.clear();
-		this.openTimes.addAll(openTimes);
+		this.openTimes = openTimes;
 	}
 
 	public String getAddress() {

@@ -138,8 +138,7 @@ public class Truck {
 	}
 
 	public void setSchedules(List<Schedule> schedules) {
-		this.schedules.clear();
-		this.schedules.addAll(schedules);
+		this.schedules = schedules;
 	}
 
 	public Owner getOwner() {
@@ -155,8 +154,7 @@ public class Truck {
 	}
 
 	public void setPhotos(List<Photo> photos) {
-		this.photos.clear();
-		this.photos.addAll(photos);
+		this.photos = photos;
 	}
 
 	public List<Holiday> getHolidays() {
@@ -164,8 +162,7 @@ public class Truck {
 	}
 
 	public void setHolidays(List<Holiday> holidays) {
-		this.holidays.clear();
-		this.holidays.addAll(holidays);
+		this.holidays = holidays;
 	}
 
 	public Category getCategory1() {
