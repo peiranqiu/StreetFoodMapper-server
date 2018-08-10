@@ -11,12 +11,10 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import project.models.Photo;
-import project.models.Schedule;
 import project.models.Truck;
 import project.repositories.PhotoRepository;
 import project.repositories.TruckRepository;
@@ -48,22 +46,6 @@ public class PhotoService {
 			Truck truck = data.get();
 			newPhoto.setTruck(truck);
 			return photoRepository.save(newPhoto);
-		}
-		response.setStatus(HttpServletResponse.SC_NOT_FOUND);
-		return null;
-	}
-	
-	@PutMapping("/api/truck/{truckId}/photo/{photoId}")
-	public Photo updatePhoto(@PathVariable("photoId") int photoId, @RequestBody Photo newPhoto, HttpServletResponse response) {
-		Optional<Photo> data = photoRepository.findById(photoId);
-		if (data.isPresent()) {
-			Photo photo = data.get();
-			photo.setId(newPhoto.getId());
-			photo.setHref(newPhoto.getHref());
-			photo.setTruck(newPhoto.getTruck());
-
-			photoRepository.save(photo);
-			return photo;
 		}
 		response.setStatus(HttpServletResponse.SC_NOT_FOUND);
 		return null;
