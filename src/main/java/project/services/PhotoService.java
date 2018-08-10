@@ -20,7 +20,7 @@ import project.repositories.PhotoRepository;
 import project.repositories.TruckRepository;
 
 @RestController
-@CrossOrigin(origins =  "*", maxAge = 3600, allowCredentials = "true")
+@CrossOrigin(origins = "*", maxAge = 3600, allowCredentials = "true")
 public class PhotoService {
 	@Autowired
 	PhotoRepository photoRepository;

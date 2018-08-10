@@ -20,7 +20,7 @@ import project.repositories.HolidayRepository;
 import project.repositories.TruckRepository;
 
 @RestController
-@CrossOrigin(origins =  "*", maxAge = 3600, allowCredentials = "true")
+@CrossOrigin(origins = "*", maxAge = 3600, allowCredentials = "true")
 public class HolidayService {
 	@Autowired
 	HolidayRepository holidayRepository;
