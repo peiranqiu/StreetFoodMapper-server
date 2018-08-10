@@ -23,7 +23,7 @@ import project.repositories.ScheduleRepository;
 import project.repositories.TruckRepository;
 
 @RestController
-@CrossOrigin(origins =  "*", maxAge = 3600, allowCredentials = "true")
+@CrossOrigin(origins = "*", maxAge = 3600, allowCredentials = "true")
 public class ScheduleService {
 	@Autowired
 	ScheduleRepository scheduleRepository;
@@ -57,7 +57,7 @@ public class ScheduleService {
 	}
 	
 
-	@DeleteMapping("/api/schedue/{scheduleId}")
+	@DeleteMapping("/api/schedule/{scheduleId}")
 	public void deleteSchedule(@PathVariable("scheduleId") int scheduleId)
 	{
 		Optional<Schedule> scheduleOptional = scheduleRepository.findById(scheduleId);
