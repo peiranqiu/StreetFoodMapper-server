@@ -99,7 +99,9 @@ public class ScheduleService {
 			schedule.setOpen(newSchedule.isOpen());
 			schedule.setLatitude(newSchedule.getLatitude());
 			schedule.setLongitude(newSchedule.getLongitude());
-			schedule.setOpenTimes(newSchedule.getOpenTimes());
+			//openTimes
+			schedule.getOpenTimes().clear();
+			schedule.getOpenTimes().addAll(newSchedule.getOpenTimes());
 			schedule.setAddress(newSchedule.getAddress());
 			schedule.setTruck(newSchedule.getTruck());
 
