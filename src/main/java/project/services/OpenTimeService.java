@@ -82,11 +82,11 @@ public class OpenTimeService {
 		Optional<OpenTime> data = openTimeRepository.findById(openTimeId);
 		if (data.isPresent()) {
 			OpenTime openTime = data.get();
-			openTime.setId(newOpenTime.getId());
-			openTime.setDay(newOpenTime.getDay());
+			//openTime.setId(newOpenTime.getId());
+			//openTime.setDay(newOpenTime.getDay());
 			openTime.setStartTime(newOpenTime.getStartTime());
 			openTime.setEndTime(newOpenTime.getEndTime());
-			openTime.setSchedule(newOpenTime.getSchedule());
+			//openTime.setSchedule(newOpenTime.getSchedule());
 
 			openTimeRepository.save(openTime);
 			return openTime;

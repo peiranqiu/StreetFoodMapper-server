@@ -11,9 +11,11 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import project.models.Holiday;
 import project.models.Photo;
 import project.models.Truck;
 import project.repositories.PhotoRepository;
@@ -69,6 +71,19 @@ public class PhotoService {
 		if (data.isPresent()) {
 			return data.get();
 		} 
+		response.setStatus(HttpServletResponse.SC_NOT_FOUND);
+		return null;
+	}
+	@PutMapping("/api/truck/{truckId}/photo/{photoId}")
+	public Photo updatePhoto(@PathVariable("photoId") int photoId, @RequestBody Photo newPhoto, HttpServletResponse response) {
+		Optional<Photo> data = photoRepository.findById(photoId);
+		if (data.isPresent()) {
+			Photo photo = data.get();
+			photo.setHref(newPhoto.getHref());
+
+			photoRepository.save(photo);
+			return photo;
+		}
 		response.setStatus(HttpServletResponse.SC_NOT_FOUND);
 		return null;
 	}

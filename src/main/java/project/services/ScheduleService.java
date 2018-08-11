@@ -95,13 +95,13 @@ public class ScheduleService {
 		Optional<Schedule> data = scheduleRepository.findById(scheduleId);
 		if (data.isPresent()) {
 			Schedule schedule = data.get();
-			schedule.setId(newSchedule.getId());
+			//schedule.setId(newSchedule.getId());
 			schedule.setOpen(newSchedule.isOpen());
 			schedule.setLatitude(newSchedule.getLatitude());
 			schedule.setLongitude(newSchedule.getLongitude());
 			schedule.setOpenTimes(newSchedule.getOpenTimes());
 			schedule.setAddress(newSchedule.getAddress());
-			schedule.setTruck(newSchedule.getTruck());
+			//schedule.setTruck(newSchedule.getTruck());
 
 			scheduleRepository.save(schedule);
 			return schedule;

@@ -11,10 +11,12 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import project.models.Holiday;
+import project.models.Schedule;
 import project.models.Truck;
 import project.repositories.HolidayRepository;
 import project.repositories.TruckRepository;
@@ -73,4 +75,22 @@ public class HolidayService {
 		response.setStatus(HttpServletResponse.SC_NOT_FOUND);
 		return null;
 	}
+	
+	@PutMapping("/api/truck/{truckId}/holiday/{holidayId}")
+	public Holiday updateHoliday(@PathVariable("holidayId") int holidayId, @RequestBody Holiday newHoliday, HttpServletResponse response) {
+		Optional<Holiday> data = holidayRepository.findById(holidayId);
+		if (data.isPresent()) {
+			Holiday holiday = data.get();
+			holiday.setDate(newHoliday.getDate());
+
+			holidayRepository.save(holiday);
+			return holiday;
+		}
+		response.setStatus(HttpServletResponse.SC_NOT_FOUND);
+		return null;
+	}
+	
+	
+	
+	
 }
