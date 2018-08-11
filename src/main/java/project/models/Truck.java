@@ -162,7 +162,8 @@ public class Truck {
 	}
 
 	public void setHolidays(List<Holiday> holidays) {
-		this.holidays = holidays;
+		this.holidays.clear();
+		this.holidays.addAll(holidays);
 	}
 
 	public Category getCategory1() {

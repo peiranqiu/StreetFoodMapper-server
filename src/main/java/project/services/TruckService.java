@@ -88,9 +88,15 @@ public class TruckService {
 			truck.setTwitter(newTruck.getTwitter());
 			truck.setRating(newTruck.getRating());
 			truck.setReviews(newTruck.getReviews());
-			truck.setPhotos(newTruck.getPhotos());
-			truck.setHolidays(newTruck.getHolidays());
-			truck.setSchedules(newTruck.getSchedules());
+			//photo
+			truck.getPhotos().clear();
+			truck.getPhotos().addAll(newTruck.getPhotos());
+			//holidays
+			truck.getHolidays().clear();
+			truck.getHolidays().addAll(newTruck.getHolidays());
+			//schedules
+			truck.getSchedules().clear();
+			truck.getSchedules().addAll(newTruck.getSchedules());
 			truck.setOwner(newTruck.getOwner());
 			truck.setWebsite(newTruck.getWebsite());
 			truck.setCategory1(newTruck.getCategory1());
