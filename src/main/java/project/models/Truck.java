@@ -36,16 +36,16 @@ public class Truck {
     @Column(name = "category3")
 	private Category category3;
 	
-	@OneToMany(mappedBy="truck", cascade=CascadeType.ALL, orphanRemoval=true)
+	@OneToMany(mappedBy="truck", cascade=CascadeType.REMOVE, orphanRemoval=true)
 	private List<Review> reviews;
 	
-	@OneToMany(mappedBy="truck", cascade=CascadeType.ALL, orphanRemoval=true)
+	@OneToMany(mappedBy="truck", cascade=CascadeType.REMOVE, orphanRemoval=true)
 	private List<Photo> photos;
 	
-	@OneToMany(mappedBy="truck", cascade=CascadeType.ALL, orphanRemoval=true)
+	@OneToMany(mappedBy="truck", cascade=CascadeType.REMOVE, orphanRemoval=true)
 	private List<Holiday> holidays;
 	
-	@OneToMany(mappedBy="truck", cascade=CascadeType.ALL, orphanRemoval=true)
+	@OneToMany(mappedBy="truck", cascade=CascadeType.REMOVE, orphanRemoval=true)
 	private List<Schedule> schedules;
 	
 	@ManyToOne

@@ -20,7 +20,7 @@ public class Schedule {
 	private String longitude;
 	private String address;
 	
-	@OneToMany(mappedBy="schedule", cascade=CascadeType.ALL, orphanRemoval=true)
+	@OneToMany(mappedBy="schedule", cascade=CascadeType.REMOVE, orphanRemoval=true)
 	private List<OpenTime> openTimes;
 
 	@ManyToOne
