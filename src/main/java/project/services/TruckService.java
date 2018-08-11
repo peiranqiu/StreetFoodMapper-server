@@ -79,21 +79,21 @@ public class TruckService {
 
 		if (data.isPresent()) {
 			Truck truck = data.get();
-			truck.setId(newTruck.getId());
-			truck.setYelpId(newTruck.getYelpId());
+			//truck.setId(newTruck.getId());
+			//truck.setYelpId(newTruck.getYelpId());
 			truck.setName(newTruck.getName());
-			truck.setUrl(newTruck.getUrl());
+			//truck.setUrl(newTruck.getUrl());
 			truck.setMenu(newTruck.getMenu());
 			truck.setPhone(newTruck.getPhone());
 			truck.setTwitter(newTruck.getTwitter());
-			truck.setRating(newTruck.getRating());
-			truck.setReviews(newTruck.getReviews());
-			truck.setPhotos(newTruck.getPhotos());
+			//truck.setRating(newTruck.getRating());
+			//truck.setReviews(newTruck.getReviews());
+			//truck.setPhotos(newTruck.getPhotos());
 			truck.getHolidays().clear();
 			truck.getHolidays().addAll(newTruck.getHolidays());
 			truck.getSchedules().clear();
 			truck.getSchedules().addAll(newTruck.getSchedules());
-			truck.setOwner(newTruck.getOwner());
+			//truck.setOwner(newTruck.getOwner());
 			truck.setWebsite(newTruck.getWebsite());
 			truck.setCategory1(newTruck.getCategory1());
 			truck.setCategory2(newTruck.getCategory2());
