@@ -87,8 +87,10 @@ public class TruckService {
 			truck.setPhone(newTruck.getPhone());
 			truck.setTwitter(newTruck.getTwitter());
 			truck.setRating(newTruck.getRating());
-			truck.setReviews(newTruck.getReviews());
-			//photo
+			//reviews
+			truck.getReviews().clear();
+			truck.getReviews().addAll(newTruck.getReviews());
+			//photos
 			truck.getPhotos().clear();
 			truck.getPhotos().addAll(newTruck.getPhotos());
 			//holidays
