@@ -80,16 +80,16 @@ public class UserService {
 	    return null;
 	  }
 	
-	@PostMapping("/api/register/user")
-	  @ResponseBody
-	  public User createUser(@RequestBody User user, HttpServletResponse response) {
+	@PostMapping("/api/user")
+	  public User createUser(@RequestBody User user, 
+				HttpServletResponse response) {
 	    String email = user.getEmail();
 	    Optional<User> data = userRepository.findUserByEmail(email);
 	    if (!data.isPresent()) {
 	      return userRepository.save(user);
 	    }
-	    response.setStatus(HttpServletResponse.SC_CONFLICT);
-	    return null;
+		response.setStatus(HttpServletResponse.SC_CONFLICT);
+		return null;
 	  }
 	
 	  @PutMapping("/api/profile/user/{userId}")
