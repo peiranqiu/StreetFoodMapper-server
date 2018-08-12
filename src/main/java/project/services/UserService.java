@@ -81,14 +81,12 @@ public class UserService {
 	  }
 	
 	@PostMapping("/api/user")
-	  public User createUser(@RequestBody User user, 
-				HttpServletResponse response) {
+	  public User createUser(@RequestBody User user) {
 	    String email = user.getEmail();
 	    Optional<User> data = userRepository.findUserByEmail(email);
 	    if (!data.isPresent()) {
 	      return userRepository.save(user);
 	    }
-		response.setStatus(HttpServletResponse.SC_CONFLICT);
 		return null;
 	  }
 	
