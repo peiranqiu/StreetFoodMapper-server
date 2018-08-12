@@ -88,6 +88,9 @@ public class UserService {
 	      if (!user.getPassword().equals(res.getPassword())) {
 	        res.setPassword(user.getPassword());
 	      }
+	      if (!user.getEmail().equals(res.getEmail())) {
+		        res.setEmail(user.getEmail());
+		      }
 	      return userRepository.save(res);
 	    }
 	    return null;
