@@ -66,6 +66,9 @@ public class OwnerService {
 	      if (!owner.getPassword().equals(res.getPassword())) {
 	        res.setPassword(owner.getPassword());
 	      }
+	      if (!owner.getEmail().equals(res.getEmail())) {
+		        res.setEmail(owner.getEmail());
+		      }
 	      return ownerRepository.save(res);
 	    }
 	    return null;
