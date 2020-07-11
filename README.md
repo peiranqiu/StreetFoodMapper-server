@@ -3,6 +3,7 @@
 Street Food Mapper is one single destination for finding food truck using various criteria including food category, status, and your bookmark list.
 
 Website: http://www.streetfoodmapper.co/home (not maintained anymore)
+
 ProductHunt: https://www.producthunt.com/posts/street-food-mapper
 
 
