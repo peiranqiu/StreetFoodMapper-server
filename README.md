@@ -7,6 +7,8 @@ Website: http://www.streetfoodmapper.co/home (not maintained anymore)
 ProductHunt: https://www.producthunt.com/posts/street-food-mapper
 
 
+
 •	A web app to track and manage food trucks with improved accuracy of schedule
+
 •	Used React, Redux, Angular, Spring, MongoDB, Yelp/Twitter APIs, delivered HiFi UX/UI, and deployed on Heroku
 
