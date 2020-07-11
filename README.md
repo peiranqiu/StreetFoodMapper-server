@@ -1,6 +1,11 @@
-# CS5610-summer-2018-project-server-peiranqiu
-This repository is used for the CS5610 summer 2018 final project by Peiran Qiu.
+# Street Food Mapper Web App
 
-Related Repositories: 
-https://github.com/peiranqiu/CS5610-summer-2018-project-peiranqiu
-https://github.com/peiranqiu/CS5610-summer-2018-project-client-peiranqiu
+Street Food Mapper is one single destination for finding food truck using various criteria including food category, status, and your bookmark list.
+
+Website: http://www.streetfoodmapper.co/home (not maintained anymore)
+ProductHunt: https://www.producthunt.com/posts/street-food-mapper
+
+
+•	A web app to track and manage food trucks with improved accuracy of schedule
+•	Used React, Redux, Angular, Spring, MongoDB, Yelp/Twitter APIs, delivered HiFi UX/UI, and deployed on Heroku
+
